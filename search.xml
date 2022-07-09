@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>ARP欺骗</title>
+      <link href="/port/20389.html"/>
+      <url>/port/20389.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>这个原理就很简单了，拦截网关的回复数据，让目标主机无法出入网关<br>在执行之前需要下载工具包</p><pre><code class="base">apt-get install -y dsniff</code></pre><p>下载完成之后把kali的上网模式改成桥接成主机<br><img src="/img/2207091.png" alt="截图"><br>然后查看本机的ip地址，命令如下</p><pre><code class="base">ip a</code></pre><p>可以看到kali本机的IP存在于eth0这张网卡上，可以执行arp攻击了<br>命令格式如下</p><pre><code class="base">arpspoof -i 【网卡，一般为eth0】 -t [被攻击者的IP地址] [网关地址]如：arpspoof -t eth0 i 192.168.111 192.168.1.1</code></pre><p>输出之后敲回车，此时被攻击的主机无法访问公网，如图<br><img src="/img/2207092.png" alt="截图"></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> kali </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>kali ddos-attack</title>
+      <link href="/port/24030.html"/>
+      <url>/port/24030.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>在搭建DDOS攻击之前，先来了解一下什么是DDOS的攻击原理。<br>我们想要访问一个网页，首先会对对方的服务器发送一个报文，确认它是否就是我们想要访问的目标，对方在收到报文之后回复一个数据包，确认我们的身份，我们的主机收到服务器回复的报文之后会再次回复对端服务器，告诉它我们就是，over。这就是著名的TCP三次握手。<br>而DDos攻击就会向对方发送大量的TCP请求报文，这个时候肯定有真的主机想要访问改服务器，但是已经访问不进去了，因为服务器已经判断不了谁是真的，谁是假的了。DDos攻击还会对带宽造成造阻塞，占用大量的系统资源，使真正想访问目标的主机无法进入。<br>本篇博客会教读者如何搭建一个环境，本机的攻击量无法对一个网段造成阻塞，切记：一定不要随随便便攻击，因为是犯法的！！！</p><p>在正式搭建DDos攻击环境之前首先得确保自己的VMwer虚拟机安装完毕，然后安装<a href="https://www.kali.org/]">kali</a>，安装方法就不在这里一一介绍了，百度上一搜一大片。<br>使用这个脚本之前要先下载安装python，这里我使用的版本是python3.9<br>可以使用如下命令检查自己的python版本</p><pre><code class="bash">python -v</code></pre><p>一.进入kali系统之后按ctrl+shift+t 快捷键进入终端，得下载ddos-acccak的环境，命令如下：</p><pre><code class="bash">cd ~</code></pre><p>进入用户家目录，如果你初始就在~路径下可以不执行此命令</p><pre><code class="bash">$ git clone https://github.com/Ha3MrX/DDos-Attack</code></pre><p>下载DDos-Attack到家目录</p><pre><code class="bash">cd DDos-Attack</code></pre><p>下载完成之后进入DDos-Attack的目录，注：Linux是区分大小写的</p><pre><code class="bash">python ddos-attack.py</code></pre><p>用python执行ddos-attack.py这个脚本</p><pre><code class="bash">chmod +x ddos-attack.py</code></pre><p>给ddos-attack.py一个执行权限</p><p>重要的来了，如果你下载python是3，请用 python3 ddos-attack.py 执行，而且高版本的python不能直接执行此脚本</p><pre><code class="bash">vim ddos-attack.py</code></pre><p>在DDos-attack的目录下执行此命令，进入vim编辑页面，(按i进入编写模式，修改完成后点ESC，再按shift+分号，输入wq保存退出)<br>把脚本里的语法改为与图中一致:<br><img src="/img/jietu1.png" alt="kali截图"><br>完成后就可以使用python ddos-attack.py进入界面了</p><p><img src="/img/jietu2.png" alt="kali截图2"><br>进入这个页面后就代表你已经成功90%了，IP target:(输入攻击对象的IP地址)<br><img src="/img/jietu3.png" alt="kali截图3"><br>这里的Port不是端口的意思，是线程数，数值越高量越大，功耗也就越高，这里我建议80，敲回车<br><img src="/img/jietu4.png" alt="kali截图4"><br>执行之后出现以下界面就意味着你已经完成了一次基本的ddos攻击</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> kali </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
+</search>
